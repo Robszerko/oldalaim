@@ -3,21 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projektjeim</title>
+    <title>Robszerko Projektjei</title>
+    <!-- Ez a sor hivatkozik a CSS fájlra, ami a kinézetet adja -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <h1>Üdvözöllek a projektjeim oldalán!</h1>
+    <div class="container">
+        
+        <!-- IDE JÖHET A LOGÓD, ha van képfájlod. 
+             Például: <img src="images/logo.png" alt="Logóm" class="logo"> 
+             Ha nincs, ez a szöveges logó is tökéletes. -->
+        <div class="logo-text">Robszerko Oldalai</div>
 
-    <p>Itt találod a GitHub-on elérhető projektjeimet:</p>
+        <header>
+            <h1>Projektjeim</h1>
+            <p>Kattints a gombokra a játékok megtekintéséhez! Az oldalak új lapon fognak megnyílni.</p>
+        </header>
 
-    <ul>
-        <li><a href="https://robszerko.github.io/jatek/" target="_blank">Játék</a></li>
-        <!-- Ide jöhet a többi projekted -->
-        <!-- Például: -->
-        <!-- <li><a href="https://felhasználóneved.github.io/projekt2/" target="_blank">Másik projekt neve</a></li> -->
-        <!-- <li><a href="https://felhasználóneved.github.io/projekt3/" target="_blank">Harmadik projekt neve</a></li> -->
-    </ul>
+        <main>
+            <ul class="project-list">
+                <!-- Itt vannak a projektjeid, amiket megadtál -->
+                <li><a href="https://robszerko.github.io/alku/" target="_blank">Áll az Alku - Csavaros Kiadás</a></li>
+                <li><a href="https://robszerko.github.io/azugras/" target="_blank">Az Ugrás - Kockázat és Nyeremény</a></li>
+                
+                <!-- Ha lesz új projekt, azt is egy hasonló sorral kell majd ide beszúrni -->
+                
+            </ul>
+        </main>
+
+    </div>
 
 </body>
 </html>
