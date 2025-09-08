@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robi Játékai</title>
+    <title>Robi Oldala</title>
 
     <!-- Google Fonts importálása -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,10 +87,27 @@
             max-width: 700px;
             margin: 0 auto;
         }
+        
+        .section-divider {
+            margin: 3rem 0;
+        }
+
+        .section-divider h2 {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
 
         .game-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .single-item-grid {
+            display: grid;
+            justify-content: center; /* Középre igazítja a rács elemet */
             gap: 2rem;
         }
 
@@ -104,6 +121,8 @@
             align-items: center;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            max-width: 400px; /* Maximális szélesség a telefonkönyv kártyának */
+            margin: 0 auto; /* Automatikus margó a középre igazításhoz */
         }
 
         .game-card:hover {
@@ -118,7 +137,6 @@
             margin-bottom: 1.5rem;
         }
         
-        /* Itt adjuk meg az ikonok színét központilag */
         .game-icon svg {
             color: var(--secondary-accent);
             filter: drop-shadow(0 0 8px rgba(80, 227, 194, 0.4));
@@ -142,7 +160,7 @@
             background: var(--button-bg);
             color: var(--button-text);
             font-weight: bold;
-            font-family: var(--font-body); /* Body font a jobb olvashatóságért */
+            font-family: var(--font-body);
             text-decoration: none;
             padding: 12px 28px;
             border-radius: 10px;
@@ -166,6 +184,7 @@
             body { padding: 1.5rem 1rem; }
             .container { padding: 2rem; }
             .header h1 { font-size: 2.5rem; }
+            .section-divider h2 { font-size: 2rem; }
             .game-grid { grid-template-columns: 1fr; }
         }
 
@@ -175,99 +194,116 @@
 
     <div class="container">
         <header class="header">
-            <h1>Robi Játékai</h1>
+            <h1>Robi Oldala</h1>
             <p class="intro-text">
-                Üdv a játékteremben! Az itt található játékokat AI segítségével készítettem. Hibák előfordulhatnak, hiszen minden még kísérleti fázisban van, nézzétek el nekem. A lista folyamatosan bővülni fog, szóval nézzetek vissza, amikor csak tehetitek! Jó szórakozást a játékokhoz! :)
+                Üdv az oldalamon! Itt találod a kísérleti projektjeimet, melyeket AI segítségével készítettem. Böngéssz a telefonkönyvben, vagy próbáld ki a folyamatosan bővülő játékgyűjteményemet! Jó szórakozást!
             </p>
         </header>
 
-        <main class="game-grid">
-
-            <!-- JÁTÉK 1: Áll az Alku -->
-            <div class="game-card">
+        <!-- TELEFONKÖNYV SZEKCIÓ -->
+        <section class="single-item-grid">
+             <div class="game-card">
                 <div class="game-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10H3"/><path d="M21 6H3"/><path d="M21 14H3"/><path d="M21 18H3"/><path d="M6 2v20M18 2v20"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path><circle cx="8" cy="13" r="2"></circle><path d="M14 15c-2 0-4-2-4-4s2-4 4-4"></path></svg>
                 </div>
-                <h2>Áll az Alku</h2>
-                <p>Mersz kockáztatni, vagy elfogadod a bankár ajánlatát? Nyisd ki a táskákat a megfelelő sorrendben, és vidd haza a főnyereményt ebben az idegőrlő szerencsejátékban!</p>
-                <a href="https://robszerko.github.io/alku/" target="_blank" class="launch-button">Játék Indítása</a>
+                <h2>Telefonkönyv</h2>
+                <p>a telefonközpont telefonkönyve</p>
+                <a href="https://robszerko.github.io/telefonkonyv/" target="_blank" class="launch-button">Megnyitás</a>
             </div>
+        </section>
 
-            <!-- JÁTÉK 2: Az Ugrás -->
-            <div class="game-card">
-                <div class="game-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="m14 14-4-4"/><path d="m10 14 4-4"/></svg>
+        <!-- JÁTÉKOK SZEKCIÓ -->
+        <section class="section-divider">
+            <h2>Robi Játékai</h2>
+            <main class="game-grid">
+    
+                <!-- JÁTÉK 1: Áll az Alku -->
+                <div class="game-card">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10H3"/><path d="M21 6H3"/><path d="M21 14H3"/><path d="M21 18H3"/><path d="M6 2v20M18 2v20"/></svg>
+                    </div>
+                    <h2>Áll az Alku</h2>
+                    <p>Mersz kockáztatni, vagy elfogadod a bankár ajánlatát? Nyisd ki a táskákat a megfelelő sorrendben, és vidd haza a főnyereményt ebben az idegőrlő szerencsejátékban!</p>
+                    <a href="https://robszerko.github.io/alku/" target="_blank" class="launch-button">Játék Indítása</a>
                 </div>
-                <h2>Az Ugrás</h2>
-                <p>Egy rossz válasz, és a mélybe zuhansz! Teszteld a tudásodat ebben a kvízjátékban, ahol minden helyes felelet egy lépéssel közelebb visz a győzelemhez a virtuális hídon.</p>
-                <a href="https://robszerko.github.io/azugras/" target="_blank" class="launch-button">Játék Indítása</a>
-            </div>
-
-            <!-- JÁTÉK 3: Színözön -->
-            <div class="game-card">
-                <div class="game-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0-10 10"/><path d="M12 22a10 10 0 0 1-10-10"/><path d="M2 12a10 10 0 0 0 10 10"/><path d="M22 12a10 10 0 0 1-10 10"/></svg>
+    
+                <!-- JÁTÉK 2: Az Ugrás -->
+                <div class="game-card">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="m14 14-4-4"/><path d="m10 14 4-4"/></svg>
+                    </div>
+                    <h2>Az Ugrás</h2>
+                    <p>Egy rossz válasz, és a mélybe zuhansz! Teszteld a tudásodat ebben a kvízjátékban, ahol minden helyes felelet egy lépéssel közelebb visz a győzelemhez a virtuális hídon.</p>
+                    <a href="https://robszerko.github.io/azugras/" target="_blank" class="launch-button">Játék Indítása</a>
                 </div>
-                <h2>Színözön</h2>
-                <p>Rendezd a káoszt! Ebben a logikai játékban azonos színű golyókat kell csoportosítanod. Gondolkodj előre, tervezd meg a lépéseidet, és ürítsd ki a táblát!</p>
-                <a href="https://robszerko.github.io/szinozon/" target="_blank" class="launch-button">Játék Indítása</a>
-            </div>
-
-            <!-- JÁTÉK 4: Pörgesd Fel! -->
-            <div class="game-card">
-                <div class="game-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.5 2.5-2.1 12.6c-.2 1.4-1.8 2.2-3.1 1.5l-4.2-2.3-2.6 2.5c-.3.3-.7.4-1.1.2l-3.6-2.2c-.5-.3-.6-1-.2-1.4l12.4-14.2c.4-.4 1.1-.3 1.4.2z"/><path d="m9.5 12.5 5-5"/></svg>
+    
+                <!-- JÁTÉK 3: Színözön -->
+                <div class="game-card">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0-10 10"/><path d="M12 22a10 10 0 0 1-10-10"/><path d="M2 12a10 10 0 0 0 10 10"/><path d="M22 12a10 10 0 0 1-10 10"/></svg>
+                    </div>
+                    <h2>Színözön</h2>
+                    <p>Rendezd a káoszt! Ebben a logikai játékban azonos színű golyókat kell csoportosítanod. Gondolkodj előre, tervezd meg a lépéseidet, és ürítsd ki a táblát!</p>
+                    <a href="https://robszerko.github.io/szinozon/" target="_blank" class="launch-button">Játék Indítása</a>
                 </div>
-                <h2>Pörgesd Fel!</h2>
-                <p>Pörgess, tippelj, és fejtsd meg a rejtvényt! A klasszikus szerencsekerék modern köntösben, ahol a jó mássalhangzó-tippek aranyat érnek. Vajon te leszel a bajnok?</p>
-                <a href="https://robszerko.github.io/porgesd/" target="_blank" class="launch-button">Játék Indítása</a>
-            </div>
-
-            <!-- JÁTÉK 5: Békebeli Szerencsekerék -->
-            <div class="game-card">
-                <div class="game-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M2 12h20"/><path d="m5 5 2 2"/><path d="m17 17 2 2"/><path d="m5 17 2-2"/><path d="m17 5-2 2"/></svg>
+    
+                <!-- JÁTÉK 4: Pörgesd Fel! -->
+                <div class="game-card">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.5 2.5-2.1 12.6c-.2 1.4-1.8 2.2-3.1 1.5l-4.2-2.3-2.6 2.5c-.3.3-.7.4-1.1.2l-3.6-2.2c-.5-.3-.6-1-.2-1.4l12.4-14.2c.4-.4 1.1-.3 1.4.2z"/><path d="m9.5 12.5 5-5"/></svg>
+                    </div>
+                    <h2>Pörgesd Fel!</h2>
+                    <p>Pörgess, tippelj, és fejtsd meg a rejtvényt! A klasszikus szerencsekerék modern köntösben, ahol a jó mássalhangzó-tippek aranyat érnek. Vajon te leszel a bajnok?</p>
+                    <a href="https://robszerko.github.io/porgesd/" target="_blank" class="launch-button">Játék Indítása</a>
                 </div>
-                <h2>Békebeli Szerencsekerék</h2>
-                <p>Utazz vissza az időben egy igazi retro élményért! Ez a játék a klasszikus tévéműsor hangulatát hozza el, a régi szabályokkal és a nosztalgikus dizájnnal. Forogjon a kerék!</p>
-                <a href="https://robszerko.github.io/szerencsekerek/" target="_blank" class="launch-button">Játék Indítása</a>
-            </div>
-
-            <!-- JÁTÉK 6: Szóda -->
-            <div class="game-card">
-                <div class="game-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 2H14l-4 9H9l4 9H9.7"/><path d="M17 3h-2.5a3.5 3.5 0 0 0-3.5 3.5V10"/><path d="M17 12h-2.5a3.5 3.5 0 0 1-3.5-3.5V5"/></svg>
+    
+                <!-- JÁTÉK 5: Békebeli Szerencsekerék -->
+                <div class="game-card">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M2 12h20"/><path d="m5 5 2 2"/><path d="m17 17 2 2"/><path d="m5 17 2-2"/><path d="m17 5-2 2"/></svg>
+                    </div>
+                    <h2>Békebeli Szerencsekerék</h2>
+                    <p>Utazz vissza az időben egy igazi retro élményért! Ez a játék a klasszikus tévéműsor hangulatát hozza el, a régi szabályokkal és a nosztalgikus dizájnnal. Forogjon a kerék!</p>
+                    <a href="https://robszerko.github.io/szerencsekerek/" target="_blank" class="launch-button">Játék Indítása</a>
                 </div>
-                <h2>Szóda</h2>
-                <p>Igazi agytorna a szavak szerelmeseinek! Keress értelmes szavakat a betűrácson, gyűjts pontokat és Szóda-Pénzt, hogy te legyél a szókirály a bajnokságban!</p>
-                <a href="https://robszerko.github.io/szoda/" target="_blank" class="launch-button">Játék Indítása</a>
-            </div>
-
-            <!-- JÁTÉK 7: Tipp-Bajnok -->
-            <div class="game-card">
-                <div class="game-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V18M8.5 18H15.5M12 15C14.7614 15 17 12.7614 17 10V4H7V10C7 12.7614 9.23858 15 12 15ZM5 10H7M17 10H19"/></svg>
+    
+                <!-- JÁTÉK 6: Szóda -->
+                <div class="game-card">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 2H14l-4 9H9l4 9H9.7"/><path d="M17 3h-2.5a3.5 3.5 0 0 0-3.5 3.5V10"/><path d="M17 12h-2.5a3.5 3.5 0 0 1-3.5-3.5V5"/></svg>
+                    </div>
+                    <h2>Szóda</h2>
+                    <p>Igazi agytorna a szavak szerelmeseinek! Keress értelmes szavakat a betűrácson, gyűjts pontokat és Szóda-Pénzt, hogy te legyél a szókirály a bajnokságban!</p>
+                    <a href="https://robszerko.github.io/szoda/" target="_blank" class="launch-button">Játék Indítása</a>
                 </div>
-                <h2>Tipp-Bajnok</h2>
-                <p>Gondolkozz a többség fejével! Ebben a játékban a leggyakoribb válaszokat keressük. Add meg a legjobb tipped, gyűjtsd a pontokat, és bizonyítsd be, hogy te vagy a legnagyobb Tipp-Bajnok!</p>
-                <a href="https://robszerko.github.io/tippbajnok/" target="_blank" class="launch-button">Játék Indítása</a>
-            </div>
-
-            <!-- ÚJ JÁTÉK: Globális Torpedó -->
-            <div class="game-card">
-                <div class="game-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v4"></path><path d="M12 18v4"></path><path d="M2 12h4"></path><path d="M18 12h4"></path><path d="M5 12.5l2-3h10l2 3h-14Z"></path><path d="M10 9.5V7.5h4v2"></path></svg>
+    
+                <!-- JÁTÉK 7: Tipp-Bajnok -->
+                <div class="game-card">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V18M8.5 18H15.5M12 15C14.7614 15 17 12.7614 17 10V4H7V10C7 12.7614 9.23858 15 12 15ZM5 10H7M17 10H19"/></svg>
+                    </div>
+                    <h2>Tipp-Bajnok</h2>
+                    <p>Gondolkozz a többség fejével! Ebben a játékban a leggyakoribb válaszokat keressük. Add meg a legjobb tipped, gyűjtsd a pontokat, és bizonyítsd be, hogy te vagy a legnagyobb Tipp-Bajnok!</p>
+                    <a href="https://robszerko.github.io/tippbajnok/" target="_blank" class="launch-button">Játék Indítása</a>
                 </div>
-                <h2>Globális Torpedó</h2>
-                <p>Vedd át a parancsnokságot a globális harcmezőn! Süllyeszd el az ellenséges flottát, gazdálkodj okosan a lőszereddel, és vesd be a legmodernebb arzenált. A győzelem után egy mindent eldöntő fődíj játék vár. Tiéd az óceán, kapitány!</p>
-                <a href="https://robszerko.github.io/torpedo/" target="_blank" class="launch-button">Játék Indítása</a>
-            </div>
+    
+                <!-- ÚJ JÁTÉK: Globális Torpedó -->
+                <div class="game-card">
+                    <div class="game-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v4"></path><path d="M12 18v4"></path><path d="M2 12h4"></path><path d="M18 12h4"></path><path d="M5 12.5l2-3h10l2 3h-14Z"></path><path d="M10 9.5V7.5h4v2"></path></svg>
+                    </div>
+                    <h2>Globális Torpedó</h2>
+                    <p>Vedd át a parancsnokságot a globális harcmezőn! Süllyeszd el az ellenséges flottát, gazdálkodj okosan a lőszereddel, és vesd be a legmodernebb arzenált. A győzelem után egy mindent eldöntő fődíj játék vár. Tiéd az óceán, kapitány!</p>
+                    <a href="https://robszerko.github.io/torpedo/" target="_blank" class="launch-button">Játék Indítása</a>
+                </div>
+    
+            </main>
+        </section>
 
-        </main>
 
         <footer>
             <!-- Ahol az év megjelenik, egy span elemet használunk ID-val -->
-            <p>&copy; <span id="copyright-year"></span> Robi Játékai</p>
+            <p>&copy; <span id="copyright-year"></span> Robi Oldala</p>
         </footer>
     </div>
 
