@@ -3,324 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robi Oldala</title>
-
-    <!-- Google Fonts importálása -->
+    <title>Robi Oldala - Információs Portál</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-
-    <!-- BEÉPÍTETT CSS STÍLUSOK -->
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
     <style>
         :root {
-            --background-color: #0a0e1a;
-            --card-background: rgba(30, 35, 45, 0.7);
-            --primary-accent: #4A90E2; /* Professzionálisabb, technológiai kék */
-            --secondary-accent: #50E3C2; /* Finomabb kékeszöld (teal) */
-            --border-color: rgba(74, 144, 226, 0.25);
-            --text-primary: #e0e6f1;
-            --text-secondary: #8892b0;
-            --button-bg: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
-            --button-text: #0a0e1a;
-            --font-title: 'Orbitron', sans-serif;
-            --font-body: 'Roboto', sans-serif;
+            --background-main: #121417; --card-background: #1c1f23; --primary-text: #e8e6e3; --secondary-text: #a9a9a9;
+            --border-color: #33383e; --shadow-color: rgba(0, 0, 0, 0.4); --brand-red: #e50914; --brand-blue: #007bff;
+            --accent-gold: #c7a468; --font-title: 'Roboto Condensed', sans-serif; --font-body: 'Source Sans Pro', sans-serif;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        /* Diszkrét, lassan mozgó háttér animáció */
-        @keyframes gradient-animation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        body {
-            background: linear-gradient(-45deg, #0a0e1a, #111829, #0a0e1a, #0b1f3a);
-            background-size: 400% 400%;
-            animation: gradient-animation 20s ease infinite;
-            color: var(--text-primary);
-            font-family: var(--font-body);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 3rem 1rem;
-            overflow-y: auto;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            background-color: var(--card-background);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 3rem;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-
-        .header {
-            margin-bottom: 3rem;
-        }
-
-        .header h1 {
-            font-family: var(--font-title);
-            font-size: 3.5rem;
-            letter-spacing: 2px;
-            background: linear-gradient(90deg, var(--text-primary), var(--text-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .header .intro-text {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .section-divider {
-            margin: 3rem 0;
-        }
-
-        .section-divider h2 {
-            font-family: var(--font-title);
-            font-size: 2.5rem;
-            color: var(--text-primary);
-            margin-bottom: 2rem;
-        }
-
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .single-item-grid {
-            display: grid;
-            justify-content: center; /* Középre igazítja a rács elemet */
-            gap: 2rem;
-        }
-
-        .game-card {
-            background: rgba(10, 14, 26, 0.4); /* Sötétebb belső kártya */
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            max-width: 400px; /* Maximális szélesség a telefonkönyv kártyának */
-            margin: 0 auto; /* Automatikus margó a középre igazításhoz */
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(74, 144, 226, 0.5);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .game-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 1.5rem;
-        }
-        
-        .game-icon svg {
-            color: var(--secondary-accent);
-            filter: drop-shadow(0 0 8px rgba(80, 227, 194, 0.4));
-        }
-
-        .game-card h2 {
-            font-family: var(--font-title);
-            font-size: 1.75rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-
-        .game-card p {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            flex-grow: 1;
-        }
-
-        .launch-button {
-            display: inline-block;
-            background: var(--button-bg);
-            color: var(--button-text);
-            font-weight: bold;
-            font-family: var(--font-body);
-            text-decoration: none;
-            padding: 12px 28px;
-            border-radius: 10px;
-            transition: transform 0.2s ease, filter 0.2s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .launch-button:hover {
-            transform: scale(1.05);
-            filter: brightness(1.1);
-        }
-
-        footer {
-            margin-top: 3rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 1.5rem 1rem; }
-            .container { padding: 2rem; }
-            .header h1 { font-size: 2.5rem; }
-            .section-divider h2 { font-size: 2rem; }
-            .game-grid { grid-template-columns: 1fr; }
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--background-main); color: var(--primary-text); font-family: var(--font-body); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 2rem 1rem; }
+        .container { width: 100%; max-width: 1300px; background-color: var(--card-background); border: 1px solid var(--border-color); border-radius: 15px; padding: 2.5rem; box-shadow: 0 4px 35px var(--shadow-color); text-align: center; }
+        .header { margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 2.5rem; }
+        .header h1 { font-family: var(--font-title); font-size: 3.5rem; color: var(--primary-text); margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none; }
+        .header h1 svg { width: 50px; height: 50px; margin-right: 15px; color: var(--brand-blue); filter: drop-shadow(0 0 5px var(--brand-blue)); }
+        .header .intro-text { font-size: 1.1rem; line-height: 1.6; color: var(--secondary-text); max-width: 800px; margin: 0 auto; }
+        .section-divider h2 { font-family: var(--font-title); font-size: 2.2rem; color: var(--primary-text); margin-bottom: 2.5rem; }
+        .game-grid, .single-item-grid { display: grid; gap: 2rem; margin-top: 3rem; }
+        .game-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .single-item-grid { justify-content: center; }
+        .game-card { background: var(--card-background); border: 1px solid var(--border-color); border-radius: 10px; padding: 2rem; display: flex; flex-direction: column; align-items: center; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
+        .game-card:hover { transform: translateY(-8px); border-color: var(--brand-blue); box-shadow: 0 8px 30px rgba(0, 123, 255, 0.15); }
+        .game-icon { width: 50px; height: 50px; margin-bottom: 1.5rem; color: var(--brand-blue); }
+        .game-card h3 { font-family: var(--font-title); font-size: 1.5rem; margin-bottom: 0.75rem; }
+        .game-card p { color: var(--secondary-text); margin-bottom: 1.5rem; flex-grow: 1; }
+        .launch-button { display: inline-block; background: var(--brand-blue); color: white; font-weight: bold; text-decoration: none; padding: 10px 25px; border-radius: 8px; transition: background-color 0.3s, transform 0.2s; }
+        .launch-button:hover { background-color: #0069d9; transform: scale(1.05); }
+        .dev-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+        .dev-modal-overlay.visible { opacity: 1; visibility: visible; }
+        .dev-modal { background: var(--card-background); padding: 2rem; border-radius: 10px; border: 1px solid var(--border-color); box-shadow: 0 5px 30px black; width: 90%; max-width: 500px; }
+        .dev-modal h2 { margin-bottom: 1rem; }
+        .dev-modal hr { border: 0; height: 1px; background: var(--border-color); margin: 2rem 0; }
+        .dev-modal p { color: var(--secondary-text); margin-bottom: 1.5rem; }
+        .dev-modal input, .dev-modal textarea { width: 100%; padding: 10px; margin-bottom: 1rem; background: #2c3135; border: 1px solid var(--border-color); color: var(--primary-text); border-radius: 5px; font-family: var(--font-body); }
+        .dev-modal button { padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; }
+        .dev-modal .btn-primary { background-color: var(--brand-blue); color: white; }
+        .dev-modal .btn-secondary { background-color: #444; color: white; margin-left: 10px; }
+        .dev-modal .btn-danger { background-color: var(--brand-red); color: white; margin-left: 10px; }
+        #rss-management-panel { display: none; }
+        #rss-list { list-style: none; padding: 0; margin: 1rem 0; max-height: 150px; overflow-y: auto; text-align: left; }
+        #rss-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid var(--border-color); }
+        .rss-url-text { word-break: break-all; flex-grow: 1; }
+        .status-error { color: var(--brand-red); font-weight: bold; margin-left: 10px; font-size: 0.9em; }
+        #rss-list button { background: var(--brand-red); color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-left: 10px; flex-shrink: 0; }
+        footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); color: var(--secondary-text); }
     </style>
 </head>
 <body>
-
     <div class="container">
         <header class="header">
-            <h1>Robi Oldala</h1>
-            <p class="intro-text">
-                Üdv az oldalamon! Itt találod a kísérleti projektjeimet, melyeket AI segítségével készítettem. Böngéssz a telefonkönyvben, vagy próbáld ki a folyamatosan bővülő játékgyűjteményemet! Jó szórakozást!
-            </p>
+            <h1 id="dev-mode-trigger"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 4.5c-1.3 0-2.5.6-3.4 1.5C16.9 7.2 16 8.8 16 10.5c0 1.7.9 3.3 2.1 4.5s2.1 1.5 3.4 1.5"/><path d="M2.5 4.5c1.3 0 2.5.6 3.4 1.5C7.1 7.2 8 8.8 8 10.5c0 1.7-.9 3.3-2.1 4.5S3.8 16.5 2.5 16.5"/><path d="M12 2a8.5 8.5 0 0 0-8.5 8.5c0 3.5 2.1 6.5 5 7.9V22h7v-1.6c2.9-1.4 5-4.4 5-7.9A8.5 8.5 0 0 0 12 2Z"/></svg>Robi Oldala</h1>
+            <p class="intro-text">Üdv az oldalamon! Itt találod a kísérleti projektjeimet, melyeket AI segítségével készítettem. Böngéssz a telefonkönyvben, vagy próbáld ki a folyamatosan bővülő játékgyűjteményemet! Jó szórakozást!</p>
         </header>
 
-        <!-- TELEFONKÖNYV SZEKCIÓ -->
-        <section class="single-item-grid">
-             <div class="game-card">
-                <div class="game-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path><circle cx="8" cy="13" r="2"></circle><path d="M14 15c-2 0-4-2-4-4s2-4 4-4"></path></svg>
-                </div>
-                <h2>Telefonkönyv</h2>
-                <p>a telefonközpont telefonkönyve</p>
-                <a href="https://robszerko.github.io/telefonkonyv/" target="_blank" class="launch-button">Megnyitás</a>
-            </div>
-        </section>
+        <!-- BEÁGYAZOTT HÍRSZALAG AZ ÚJ CÍMRŐL -->
+        <iframe 
+            src="https://robszerko.github.io/hircsik/" 
+            style="width: 100%; height: 55px; border: none; border-radius: 8px; margin: 2.5rem 0;"
+            scrolling="no"
+            title="TKP Hírszalag">
+        </iframe>
 
-        <!-- JÁTÉKOK SZEKCIÓ -->
+        <!-- JÁTÉKOK STB. -->
+        <section class="single-item-grid"><div class="game-card"><div class="game-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0 1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path><circle cx="8" cy="13" r="2"></circle><path d="M14 15c-2 0-4-2-4-4s2-4 4-4"></path></svg></div><h3>Telefonkönyv</h3><p>A telefonközpont telefonkönyve.</p><a href="https://robszerko.github.io/telefonkonyv/" target="_blank" class="launch-button">Megnyitás</a></div></section>
         <section class="section-divider">
             <h2>Robi Játékai</h2>
             <main class="game-grid">
-    
-                <!-- JÁTÉK 1: Áll az Alku -->
-                <div class="game-card">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10H3"/><path d="M21 6H3"/><path d="M21 14H3"/><path d="M21 18H3"/><path d="M6 2v20M18 2v20"/></svg>
-                    </div>
-                    <h2>Áll az Alku</h2>
-                    <p>Mersz kockáztatni, vagy elfogadod a bankár ajánlatát? Nyisd ki a táskákat a megfelelő sorrendben, és vidd haza a főnyereményt ebben az idegőrlő szerencsejátékban!</p>
-                    <a href="https://robszerko.github.io/alku/" target="_blank" class="launch-button">Játék Indítása</a>
-                </div>
-    
-                <!-- JÁTÉK 2: Az Ugrás -->
-                <div class="game-card">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="m14 14-4-4"/><path d="m10 14 4-4"/></svg>
-                    </div>
-                    <h2>Az Ugrás</h2>
-                    <p>Egy rossz válasz, és a mélybe zuhansz! Teszteld a tudásodat ebben a kvízjátékban, ahol minden helyes felelet egy lépéssel közelebb visz a győzelemhez a virtuális hídon.</p>
-                    <a href="https://robszerko.github.io/azugras/" target="_blank" class="launch-button">Játék Indítása</a>
-                </div>
-    
-                <!-- JÁTÉK 3: Színözön -->
-                <div class="game-card">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0-10 10"/><path d="M12 22a10 10 0 0 1-10-10"/><path d="M2 12a10 10 0 0 0 10 10"/><path d="M22 12a10 10 0 0 1-10 10"/></svg>
-                    </div>
-                    <h2>Színözön</h2>
-                    <p>Rendezd a káoszt! Ebben a logikai játékban azonos színű golyókat kell csoportosítanod. Gondolkodj előre, tervezd meg a lépéseidet, és ürítsd ki a táblát!</p>
-                    <a href="https://robszerko.github.io/szinozon/" target="_blank" class="launch-button">Játék Indítása</a>
-                </div>
-    
-                <!-- JÁTÉK 4: Pörgesd Fel! -->
-                <div class="game-card">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.5 2.5-2.1 12.6c-.2 1.4-1.8 2.2-3.1 1.5l-4.2-2.3-2.6 2.5c-.3.3-.7.4-1.1.2l-3.6-2.2c-.5-.3-.6-1-.2-1.4l12.4-14.2c.4-.4 1.1-.3 1.4.2z"/><path d="m9.5 12.5 5-5"/></svg>
-                    </div>
-                    <h2>Pörgesd Fel!</h2>
-                    <p>Pörgess, tippelj, és fejtsd meg a rejtvényt! A klasszikus szerencsekerék modern köntösben, ahol a jó mássalhangzó-tippek aranyat érnek. Vajon te leszel a bajnok?</p>
-                    <a href="https://robszerko.github.io/porgesd/" target="_blank" class="launch-button">Játék Indítása</a>
-                </div>
-    
-                <!-- JÁTÉK 5: Békebeli Szerencsekerék -->
-                <div class="game-card">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M2 12h20"/><path d="m5 5 2 2"/><path d="m17 17 2 2"/><path d="m5 17 2-2"/><path d="m17 5-2 2"/></svg>
-                    </div>
-                    <h2>Békebeli Szerencsekerék</h2>
-                    <p>Utazz vissza az időben egy igazi retro élményért! Ez a játék a klasszikus tévéműsor hangulatát hozza el, a régi szabályokkal és a nosztalgikus dizájnnal. Forogjon a kerék!</p>
-                    <a href="https://robszerko.github.io/szerencsekerek/" target="_blank" class="launch-button">Játék Indítása</a>
-                </div>
-    
-                <!-- JÁTÉK 6: Szóda -->
-                <div class="game-card">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 2H14l-4 9H9l4 9H9.7"/><path d="M17 3h-2.5a3.5 3.5 0 0 0-3.5 3.5V10"/><path d="M17 12h-2.5a3.5 3.5 0 0 1-3.5-3.5V5"/></svg>
-                    </div>
-                    <h2>Szóda</h2>
-                    <p>Igazi agytorna a szavak szerelmeseinek! Keress értelmes szavakat a betűrácson, gyűjts pontokat és Szóda-Pénzt, hogy te legyél a szókirály a bajnokságban!</p>
-                    <a href="https://robszerko.github.io/szoda/" target="_blank" class="launch-button">Játék Indítása</a>
-                </div>
-    
-                <!-- JÁTÉK 7: Tipp-Bajnok -->
-                <div class="game-card">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V18M8.5 18H15.5M12 15C14.7614 15 17 12.7614 17 10V4H7V10C7 12.7614 9.23858 15 12 15ZM5 10H7M17 10H19"/></svg>
-                    </div>
-                    <h2>Tipp-Bajnok</h2>
-                    <p>Gondolkozz a többség fejével! Ebben a játékban a leggyakoribb válaszokat keressük. Add meg a legjobb tipped, gyűjtsd a pontokat, és bizonyítsd be, hogy te vagy a legnagyobb Tipp-Bajnok!</p>
-                    <a href="https://robszerko.github.io/tippbajnok/" target="_blank" class="launch-button">Játék Indítása</a>
-                </div>
-    
-                <!-- JÁTÉK 8: Globális Torpedó -->
-                <div class="game-card">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v4"></path><path d="M12 18v4"></path><path d="M2 12h4"></path><path d="M18 12h4"></path><path d="M5 12.5l2-3h10l2 3h-14Z"></path><path d="M10 9.5V7.5h4v2"></path></svg>
-                    </div>
-                    <h2>Globális Torpedó</h2>
-                    <p>Vedd át a parancsnokságot és játsz online a globális harcmezőn! Süllyeszd el az ellenséges flottát, gazdálkodj okosan a lőszereddel, és vesd be a legmodernebb arzenált. A győzelem után egy mindent eldöntő fődíj játék vár. Tiéd az óceán, kapitány!</p>
-                    <a href="https://robszerko.github.io/torpedo/" target="_blank" class="launch-button">Játék Indítása</a>
-                </div>
-
-                <!-- ÚJ JÁTÉK: Amőba -->
-                <div class="game-card">
-                    <div class="game-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><path d="m5 5 4 4m0-4-4 4"/><circle cx="17" cy="17" r="2"/></svg>
-                    </div>
-                    <h2>Amőba</h2>
-                    <p>A klasszikus ötödölő modern köntösben! Hívd ki az AI-t, vagy mérkőzz meg barátaiddal online. Rakj le öt jelet egy sorba a győzelemért. Stratégia és előrelátás szükséges!</p>
-                    <a href="https://robszerko.github.io/amoba/" target="_blank" class="launch-button">Játék Indítása</a>
-                </div>
-    
+                 <div class="game-card"> <div class="game-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10H3"/><path d="M21 6H3"/><path d="M21 14H3"/><path d="M21 18H3"/><path d="M6 2v20M18 2v20"/></svg> </div> <h3>Áll az Alku</h3> <p>Mersz kockáztatni, vagy elfogadod a bankár ajánlatát? Vidd haza a főnyereményt!</p> <a href="https://robszerko.github.io/alku/" target="_blank" class="launch-button">Játék Indítása</a> </div> <div class="game-card"> <div class="game-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="m14 14-4-4"/><path d="m10 14 4-4"/></svg> </div> <h3>Az Ugrás</h3> <p>Teszteld a tudásodat ebben a kvízjátékban, ahol a helyes válaszok győzelemhez vezetnek.</p> <a href="https://robszerko.github.io/azugras/" target="_blank" class="launch-button">Játék Indítása</a> </div> <div class="game-card"> <div class="game-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0-10 10"/><path d="M12 22a10 10 0 0 1-10-10"/><path d="M2 12a10 10 0 0 0 10 10"/><path d="M22 12a10 10 0 0 1-10 10"/></svg> </div> <h3>Színözön</h3> <p>Rendezd a káoszt! Csoportosítsd az azonos színű golyókat ebben a logikai játékban.</p> <a href="https://robszerko.github.io/szinozon/" target="_blank" class="launch-button">Játék Indítása</a> </div> <div class="game-card"> <div class="game-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.5 2.5-2.1 12.6c-.2 1.4-1.8 2.2-3.1 1.5l-4.2-2.3-2.6 2.5c-.3.3-.7.4-1.1.2l-3.6-2.2c-.5-.3-.6-1-.2-1.4l12.4-14.2c.4-.4 1.1-.3 1.4.2z"/><path d="m9.5 12.5 5-5"/></svg> </div> <h3>Pörgesd Fel!</h3> <p>Pörgess, tippelj, és fejtsd meg a rejtvényt! A klasszikus szerencsekerék modern köntösben.</p> <a href="https://robszerko.github.io/porgesd/" target="_blank" class="launch-button">Játék Indítása</a> </div> <div class="game-card"> <div class="game-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M2 12h20"/><path d="m5 5 2 2"/><path d="m17 17 2 2"/><path d="m5 17 2-2"/><path d="m17 5-2 2"/></svg> </div> <h3>Békebeli Szerencsekerék</h3> <p>Utazz vissza az időben egy igazi retro élményért, nosztalgikus dizájnnal.</p> <a href="https://robszerko.github.io/szerencsekerek/" target="_blank" class="launch-button">Játék Indítása</a> </div> <div class="game-card"> <div class="game-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 2H14l-4 9H9l4 9H9.7"/><path d="M17 3h-2.5a3.5 3.5 0 0 0-3.5 3.5V10"/><path d="M17 12h-2.5a3.5 3.5 0 0 1-3.5-3.5V5"/></svg> </div> <h3>Szóda</h3> <p>Igazi agytorna a szavak szerelmeseinek! Keress értelmes szavakat, és légy te a szókirály!</p> <a href="https://robszerko.github.io/szoda/" target="_blank" class="launch-button">Játék Indítása</a> </div> <div class="game-card"> <div class="game-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V18M8.5 18H15.5M12 15C14.7614 15 17 12.7614 17 10V4H7V10C7 12.7614 9.23858 15 12 15ZM5 10H7M17 10H19"/></svg> </div> <h3>Tipp-Bajnok</h3> <p>Gondolkozz a többség fejével! Ebben a játékban a leggyakoribb válaszokat keressük.</p> <a href="https://robszerko.github.io/tippbajnok/" target="_blank" class="launch-button">Játék Indítása</a> </div> <div class="game-card"> <div class="game-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v4"></path><path d="M12 18v4"></path><path d="M2 12h4"></path><path d="M18 12h4"></path><path d="M5 12.5l2-3h10l2 3h-14Z"></path><path d="M10 9.5V7.5h4v2"></path></svg> </div> <h3>Globális Torpedó</h3> <p>Vedd át a parancsnokságot és süllyeszd el az ellenséges flottát online!</p> <a href="https://robszerko.github.io/torpedo/" target="_blank" class="launch-button">Játék Indítása</a> </div> <div class="game-card"> <div class="game-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><path d="m5 5 4 4m0-4-4 4"/><circle cx="17" cy="17" r="2"/></svg> </div> <h3>Amőba</h3> <p>A klasszikus ötödölő modern köntösben! Hívd ki az AI-t, vagy mérkőzz meg barátaiddal online.</p> <a href="https://robszerko.github.io/amoba/" target="_blank" class="launch-button">Játék Indítása</a> </div>
             </main>
         </section>
-
-
-        <footer>
-            <!-- Ahol az év megjelenik, egy span elemet használunk ID-val -->
-            <p>&copy; <span id="copyright-year"></span> Robi Oldala</p>
-        </footer>
+        <footer><p>&copy; <span id="copyright-year"></span> Robi Oldala</p></footer>
     </div>
 
-    <!-- JavaScript az év automatikus frissítéséhez -->
-    <script>
-        document.getElementById('copyright-year').textContent = new Date().getFullYear();
-    </script>
+    <!-- FEJLESZTŐI MODAL ABLAK -->
+    <div class="dev-modal-overlay" id="dev-modal-overlay"><div class="dev-modal"><div id="password-panel"><h2>Fejlesztői Mód</h2><p>Kérlek, add meg a belépési kódot a szerkesztéshez.</p><input type="password" id="dev-password-input" placeholder="Fejlesztői kód"><button class="btn-primary" id="submit-dev-code">Belépés</button><button class="btn-secondary" id="cancel-dev-mode">Mégse</button></div><div id="rss-management-panel"><h2>RSS Források Kezelése</h2><ul id="rss-list"></ul><input type="url" id="rss-url-input" placeholder="Új RSS hírforrás URL-je..."><button class="btn-primary" id="add-rss-btn">Hozzáadás</button><hr><h2>Közlemény</h2><textarea id="custom-message-input" rows="3" placeholder="Írj ide egyedi üzenetet..."></textarea><button class="btn-primary" id="publish-message-btn">Közlemény közzététele</button><button class="btn-danger" id="clear-message-btn">Közlemény törlése</button><hr style="margin-top: 2rem;"><button class="btn-secondary" id="close-rss-panel">Bezárás</button></div></div></div>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getDatabase, ref, onValue, set, push, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+        // A te Firebase konfigurációd
+        const firebaseConfig = { apiKey: "AIzaSyDgBgiNSxjgWP_jmaoHpf0Qejo8_OO4sPg", authDomain: "robi-oldala.firebaseapp.com", databaseURL: "https://robi-oldala-default-rtdb.europe-west1.firebasedatabase.app", projectId: "robi-oldala", storageBucket: "robi-oldala.appspot.com", messagingSenderId: "300815778397", appId: "1:300815778397:web:ec609be55cc8afd193c3b4" };
+        
+        // Inicializálás
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const feedsRef = ref(database, 'feeds');
+        const messageRef = ref(database, 'message'); // Új referencia a közleményhez
+        
+        let rssFeeds = {};
+
+        // === Fejlesztői Mód Logika ===
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+            const devModalOverlay = document.getElementById('dev-modal-overlay');
+            const passwordPanel = document.getElementById('password-panel');
+            const rssManagementPanel = document.getElementById('rss-management-panel');
+            const devPasswordInput = document.getElementById('dev-password-input');
+            const rssListUl = document.getElementById('rss-list');
+            const rssUrlInput = document.getElementById('rss-url-input');
+            const customMessageInput = document.getElementById('custom-message-input');
+
+            const openDevModal = () => devModalOverlay.classList.add('visible');
+            const closeDevModal = () => {
+                devModalOverlay.classList.remove('visible');
+                setTimeout(() => {
+                    passwordPanel.style.display = 'block';
+                    rssManagementPanel.style.display = 'none';
+                    devPasswordInput.value = '';
+                }, 300);
+            };
+            
+            const renderRssList = () => {
+                rssListUl.innerHTML = '';
+                for (const key in rssFeeds) {
+                    const li = document.createElement('li');
+                    const urlSpan = document.createElement('span');
+                    urlSpan.textContent = rssFeeds[key];
+                    urlSpan.className = 'rss-url-text';
+                    li.appendChild(urlSpan);
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Törlés';
+                    deleteBtn.onclick = () => remove(ref(database, 'feeds/' + key));
+                    li.appendChild(deleteBtn);
+                    rssListUl.appendChild(li);
+                }
+            };
+
+            document.getElementById('dev-mode-trigger').addEventListener('click', openDevModal);
+            document.getElementById('cancel-dev-mode').addEventListener('click', closeDevModal);
+            document.getElementById('close-rss-panel').addEventListener('click', closeDevModal);
+            
+            document.getElementById('submit-dev-code').addEventListener('click', () => {
+                if (devPasswordInput.value === '0000') {
+                    passwordPanel.style.display = 'none';
+                    renderRssList();
+                    // Közlemény betöltése a beviteli mezőbe
+                    onValue(messageRef, (snapshot) => {
+                        customMessageInput.value = snapshot.val() || '';
+                    }, { onlyOnce: true });
+                    rssManagementPanel.style.display = 'block';
+                } else {
+                    alert('Hibás kód!');
+                }
+            });
+
+            document.getElementById('add-rss-btn').addEventListener('click', () => {
+                const newUrl = rssUrlInput.value.trim();
+                if (newUrl) {
+                    try {
+                        new URL(newUrl);
+                        if (!Object.values(rssFeeds).includes(newUrl)) {
+                            push(feedsRef, newUrl);
+                            rssUrlInput.value = '';
+                        } else { alert('Ez a forrás már létezik.'); }
+                    } catch (_) { alert('Érvénytelen URL!'); }
+                }
+            });
+
+            // Közlemény kezelő gombok
+            document.getElementById('publish-message-btn').addEventListener('click', () => {
+                set(messageRef, customMessageInput.value.trim());
+                alert('Közlemény közzétéve!');
+            });
+            document.getElementById('clear-message-btn').addEventListener('click', () => {
+                remove(messageRef);
+                customMessageInput.value = '';
+                alert('Közlemény törölve!');
+            });
+
+            // RSS feedek figyelése a lista frissítéséhez
+            onValue(feedsRef, (snapshot) => {
+                rssFeeds = snapshot.val() || {};
+                if (rssManagementPanel.style.display === 'block') {
+                    renderRssList();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
